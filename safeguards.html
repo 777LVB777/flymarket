@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>Checks · Flymarket</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap">
+<nav>
+  <a class="brand" href="index.html">Flymarket</a>
+  <div class="navlinks"><a class="btn" href="method.html">Method</a><a class="btn" href="results.html">Results</a><a class="btn" href="trading.html">Trading</a><a class="btn" href="safeguards.html" aria-current="page">Checks</a><a class="btn" href="data.html">Data</a><a class="btn line" href="https://github.com/777LVB777/flyshi-research" target="_blank" rel="noopener">Code</a></div>
+</nav>
+<main>
+<header class="pagehead"><span class="label">Section 4</span><h1>The checks</h1><p>Each check below was planned in writing before it was run. Failures and mistakes are listed alongside the passes and kept on the record.</p></header>
+<div class="keyrow"><span style="--c:var(--win)">Passed or locked</span><span style="--c:var(--loss)">Failed, or a mistake was found</span></div>
+<section><div class="tl"><div class="ev"><span class="d">September 2026</span><h3>The published model was reproduced<span class="tag ok">passed</span></h3><p>Our copy of the model gave the same response to a sugar-feeding signal as the original paper, with the same top responding neurons.</p></div><div class="ev fail"><span class="d">September 2026</span><h3>Smell input did not work<span class="tag caught">failed</span></h3><p>A single smell channel spread to about 97 percent of the next layer of neurons, so different smells looked the same to the circuit. We switched to driving the Kenyon cells directly.</p></div><div class="ev fail"><span class="d">September 2026</span><h3>Input cells came from both sides of the brain<span class="tag caught">bug found</span></h3><p>The input code was choosing cells from both sides of the brain, which caused the whole mushroom body to fire at once. We fixed it and kept the failed runs in the record.</p></div><div class="ev"><span class="d">September 28</span><h3>The circuit learned<span class="tag ok">passed</span></h3><p>The learning effect was 154.5 against a threshold of 6.5, and all five control conditions behaved as predicted.</p></div><div class="ev fail"><span class="d">October 9</span><h3>The market code still had the old input bug<span class="tag caught">caught before running</span></h3><p>A check before the main run found the market simulation still using cells from both sides. It was fixed before any server was rented.</p></div><div class="ev fail"><span class="d">October 9</span><h3>The original comparison could be passed by luck<span class="tag caught">caught before running</span></h3><p>A power analysis showed the first benchmark could be beaten by chance alone. We replaced it with the best possible forecast based on price alone.</p></div><div class="ev"><span class="d">October 11</span><h3>The server matched the laptop exactly<span class="tag ok">passed</span></h3><p>The cloud server reproduced a saved laptop simulation exactly, down to every neuron.</p></div><div class="ev"><span class="d">October 12</span><h3>Runaway firing did not explain the learning result<span class="tag ok">passed</span></h3><p>Removing the trials with runaway firing made the learning effect slightly larger, not smaller.</p></div><div class="ev"><span class="d">October 16</span><h3>The real-market rules were published<span class="tag ok">locked</span></h3><p>The pass rule, the shuffled-outcome control and the list of markets were all fixed before any price data was downloaded.</p></div><div class="ev"><span class="d">October 17</span><h3>The price data was downloaded and checked<span class="tag ok">passed</span></h3><p>Price histories for 11,500 markets were downloaded and checked. No price in the data comes from after the moment the circuit makes its decision, and the input strengths stay within the range already tested.</p></div><div class="ev"><span class="d">October 17</span><h3>The real-market test was locked to run regardless of the first result<span class="tag ok">locked</span></h3><p>Before any result from the simulated markets existed, we recorded that the real-market test runs whatever the simulated test shows. This removes any chance of choosing based on the outcome.</p></div><div class="ev"><span class="d">October 17</span><h3>The remaining runs were automated<span class="tag ok">passed</span></h3><p>A program on the server now finishes the simulated test, publishes its result, and starts the real-market test on a frozen, tagged version of the code. It was tested on fake data before being switched on.</p></div></div></section>
+<div class="pager"><a class="btn" href="trading.html">← Trading</a><a class="btn line" href="data.html">Data →</a></div>
+</main>
+<footer>
+  <a class="logo" href="index.html"><img src="fly.svg" alt=""><span class="word">Flymarket</span></a>
+  <p>Luca Volpi Benowitz, University of Pennsylvania. Brain model: Shiu, P.K. et al. (2024), Nature 634, 210–219. Connectome: FlyWire. Market data: Polymarket public API, credited as the data source; this project is independent and not affiliated with or endorsed by Polymarket.</p>
+  <p>This is a simplified computer model, not a fly. Reward here is a number applied by a learning rule; nothing in the simulation experiences anything. No real money is traded at any stage. Software written largely with AI coding assistants under the author's direction.</p>
+</footer>
+</div>
+<div class="tip" id="tip" hidden></div>
+<script src="charts.js"></script>
+</body>
+</html>

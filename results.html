@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>Results · Flymarket</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap">
+<nav>
+  <a class="brand" href="index.html">Flymarket</a>
+  <div class="navlinks"><a class="btn" href="method.html">Method</a><a class="btn" href="results.html" aria-current="page">Results</a><a class="btn" href="trading.html">Trading</a><a class="btn" href="safeguards.html">Checks</a><a class="btn" href="data.html">Data</a><a class="btn line" href="https://github.com/777LVB777/flyshi-research" target="_blank" rel="noopener">Code</a></div>
+</nav>
+<main>
+<header class="pagehead"><span class="label">Section 2</span><h1>The results</h1><p>These are the finished results so far. Each figure is explained in plain terms below it. The market-prediction verdict is not in yet; see the trading test.</p></header>
+<section>
+  <div class="sechead"><span class="label">2.1</span><h2>The circuit learns from reward</h2>
+  <p>The circuit was shown two cues, A and B, and rewarded for one of them over 40 training trials. It was then tested five separate times with different random seeds. The pass threshold was set before the run at three times the normal trial-to-trial noise, which came to 6.5 spikes per second.</p></div>
+  <div class="fig">
+    <h3><span class="n">Figure 1.</span>Change in preference for cue A over cue B after training</h3>
+    <div class="chart" id="c-learn"></div>
+    <p class="cap">Each bar shows how much the circuit's preference for cue A over cue B changed after training, in spikes per second. The thin shaded band near zero is the preset noise threshold. When cue A was rewarded, preference for A rose by 154.5, about 24 times the threshold. When learning was switched off, the change was exactly zero. When cue B was rewarded instead, the preference reversed. When cue A was punished, preference for A fell. Rewarding both cues was included for description only and was not part of the pass rule.</p>
+  </div>
+</section>
+<section>
+  <div class="sechead"><span class="label">2.2</span><h2>The circuit tracks price, and learning can trigger runaway firing</h2></div>
+  <div class="figs">
+    <div class="fig">
+      <h3><span class="n">Figure 2.</span>Circuit score at different market prices</h3>
+      <div class="chart" id="c-grade"></div>
+      <p class="cap">This figure shows the circuit's score for five different market prices. The score drops steadily as the price rises, so the circuit's response carries the price information. None of the 60 runs fired out of control. A control that sent the same input through different cells produced 68 to 83 percent of the same change, so most of this pattern comes from the strength of the input rather than from which particular cells receive it.</p>
+    </div>
+    <div class="fig">
+      <h3><span class="n">Figure 3.</span>Runaway firing events by training condition</h3>
+      <div class="chart" id="c-casc"></div>
+      <p class="cap">This figure counts the test trials, out of 50 per condition, in which about 3,300 extra neurons suddenly fired together. These events never happened before training, with learning off, or after punishment. They appeared only after reward. When these trials are removed, the main learning result becomes slightly larger (154.5 rises to 159.3), so the result does not depend on them.</p>
+    </div>
+  </div>
+</section>
+<section>
+  <div class="sechead"><span class="label">2.3</span><h2>Too much input sets off the whole mushroom body</h2></div>
+  <div class="fig">
+    <h3><span class="n">Table 1.</span>Runs in which the mushroom body fired all at once</h3>
+    <div class="tablewrap"><table>
+      <thead><tr><th>Where the input cells were</th><th>Number of cells driven</th><th class="n">Runs affected</th></tr></thead>
+      <tbody>
+        <tr><td>Both sides of the brain</td><td>100</td><td class="n">0 of 6</td></tr>
+        <tr><td>Both sides of the brain</td><td>200, 300 or 500</td><td class="n">18 of 18</td></tr>
+        <tr><td>Left side only</td><td>100 to 500, at very high total input</td><td class="n">1 of 24</td></tr>
+      </tbody></table></div>
+    <p class="cap">This table shows how often the mushroom body "ignited," meaning about 65 percent of the cells that were not being stimulated began firing too. When input cells came from both sides of the brain, this happened in every run with 200 or more cells. With input cells on the left side only, it happened once in 24 runs, even at very high input. For this reason, all later experiments use left-side input only. The both-sides setup was originally caused by a bug, which we found and fixed.</p>
+  </div>
+</section>
+<div class="pager"><a class="btn" href="method.html">← Method</a><a class="btn line" href="trading.html">Trading →</a></div>
+</main>
+<footer>
+  <a class="logo" href="index.html"><img src="fly.svg" alt=""><span class="word">Flymarket</span></a>
+  <p>Luca Volpi Benowitz, University of Pennsylvania. Brain model: Shiu, P.K. et al. (2024), Nature 634, 210–219. Connectome: FlyWire. Market data: Polymarket public API, credited as the data source; this project is independent and not affiliated with or endorsed by Polymarket.</p>
+  <p>This is a simplified computer model, not a fly. Reward here is a number applied by a learning rule; nothing in the simulation experiences anything. No real money is traded at any stage. Software written largely with AI coding assistants under the author's direction.</p>
+</footer>
+</div>
+<div class="tip" id="tip" hidden></div>
+<script src="charts.js"></script>
+</body>
+</html>

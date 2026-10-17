@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>Method · Flymarket</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap">
+<nav>
+  <a class="brand" href="index.html">Flymarket</a>
+  <div class="navlinks"><a class="btn" href="method.html" aria-current="page">Method</a><a class="btn" href="results.html">Results</a><a class="btn" href="trading.html">Trading</a><a class="btn" href="safeguards.html">Checks</a><a class="btn" href="data.html">Data</a><a class="btn line" href="https://github.com/777LVB777/flyshi-research" target="_blank" rel="noopener">Code</a></div>
+</nav>
+<main>
+<header class="pagehead"><span class="label">Section 1</span><h1>The method</h1><p>This page explains how a market is shown to the fly circuit, how the circuit makes a choice, and how it learns from the result.</p></header><section><div class="sechead"><span class="label">1.1</span><h2>The four steps</h2></div>
+  <div class="flow">
+    <div class="node"><span class="k">Step 1</span><h3>The market</h3><p>Each market is described by three numbers: its current price, how much the price recently changed, and how long until it closes. Each number is converted into a firing rate between 30 and 150 spikes per second.</p></div>
+    <div class="node"><span class="k">Step 2</span><h3>The input</h3><p>Those firing rates drive small groups of Kenyon cells, the main input neurons of the mushroom body. Each group has 100 cells, all on the left side of the brain. The YES side and the NO side of a market are shown separately.</p></div>
+    <div class="node"><span class="k">Step 3</span><h3>The readout</h3><p>The circuit's response is read from 96 mushroom-body output neurons. Each output neuron is scored according to the type of dopamine neuron that serves its region.</p></div>
+    <div class="node"><span class="k">Step 4</span><h3>The choice</h3><p>Whichever side, YES or NO, produces the higher score is the circuit's pick. If the two scores are too close, the circuit abstains and nothing is learned from that market.</p></div>
+  </div></section><section><div class="sechead"><span class="label">1.2</span><h2>The learning rule</h2></div>
+  <div class="prose">
+    <p>When a market closes, its outcome becomes a teaching signal. The rule then weakens the connections from the Kenyon cells that were active to the output neurons in the regions that match that signal. This mirrors how learning is thought to work in the real fly mushroom body. Over time, all connections slowly drift back toward the strengths in the original wiring map.</p>
+    <p>The learning rule is ours. The brain model from Shiu et al. has no learning of its own. The teaching signal is applied directly by the rule; the model's dopamine neurons are not used to deliver it.</p>
+  </div></section><section><div class="sechead"><span class="label">1.3</span><h2>What comes from where</h2></div>
+  <dl class="facts">
+    <dt>The brain model</dt><dd>A spiking model of the adult fly central brain by Shiu et al. (2024, Nature), using FlyWire wiring version 783. We use it unchanged.</dd>
+    <dt>The learning rule</dt><dd>Written by us for this project, as described above.</dd>
+    <dt>The input groups</dt><dd>Left-side only. Groups drawn from both sides of the brain caused the whole mushroom body to fire at once (see the results).</dd>
+    <dt>The markets</dt><dd>Simulated markets first, then historical Polymarket markets replayed offline. There is no live trading and no real money.</dd>
+    <dt>The rules</dt><dd>Each test's pass and fail criteria were written and published before the test was run.</dd>
+  </dl></section>
+<div class="pager"><a class="btn" href="index.html">← Home</a><a class="btn line" href="results.html">Results →</a></div>
+</main>
+<footer>
+  <a class="logo" href="index.html"><img src="fly.svg" alt=""><span class="word">Flymarket</span></a>
+  <p>Luca Volpi Benowitz, University of Pennsylvania. Brain model: Shiu, P.K. et al. (2024), Nature 634, 210–219. Connectome: FlyWire. Market data: Polymarket public API, credited as the data source; this project is independent and not affiliated with or endorsed by Polymarket.</p>
+  <p>This is a simplified computer model, not a fly. Reward here is a number applied by a learning rule; nothing in the simulation experiences anything. No real money is traded at any stage. Software written largely with AI coding assistants under the author's direction.</p>
+</footer>
+</div>
+<div class="tip" id="tip" hidden></div>
+<script src="charts.js"></script>
+</body>
+</html>

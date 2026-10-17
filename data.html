@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>Data · Flymarket</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap">
+<nav>
+  <a class="brand" href="index.html">Flymarket</a>
+  <div class="navlinks"><a class="btn" href="method.html">Method</a><a class="btn" href="results.html">Results</a><a class="btn" href="trading.html">Trading</a><a class="btn" href="safeguards.html">Checks</a><a class="btn" href="data.html" aria-current="page">Data</a><a class="btn line" href="https://github.com/777LVB777/flyshi-research" target="_blank" rel="noopener">Code</a></div>
+</nav>
+<main>
+<header class="pagehead"><span class="label">Section 5</span><h1>The data</h1><p>The real-market test uses historical Polymarket markets. This page explains which markets were chosen and how they are split.</p></header><section><div class="sechead"><span class="label">5.1</span><h2>The markets</h2></div>
+  <div class="numrow">
+    <div><span class="big">4.23M</span><span class="label">Closed markets scanned</span></div>
+    <div><span class="big">1.44M</span><span class="label">Ended with a clean yes or no</span></div>
+    <div><span class="big">40,893</span><span class="label">Qualify for the study</span></div>
+  </div>
+  <div class="prose">
+    <p>We scanned every closed market on Polymarket, about 4.23 million in total. Of these, 1.44 million ended with a clear YES or NO outcome. A market qualifies for the study if at least $10,000 was traded on it, and only one market is kept per event so that closely related questions are not counted twice. That leaves 40,893 markets.</p>
+    <p>The data is historical and read only. Polymarket support confirmed in writing that this use is permitted. Market outcomes stay sealed until the test is run.</p>
+  </div>
+  <p class="hash">Fingerprint (SHA-256) of the frozen market list: f3d41123e20ef10b0651b24531e909cb41691e94e1c83df7b0f83a3f2d5975f8</p></section><section><div class="sechead"><span class="label">5.2</span><h2>The split</h2></div>
+  <dl class="facts">
+    <dt>The training set</dt><dd>Markets that closed before March 1, 2026. There are 16,992 available, and 3,220 are used.</dd>
+    <dt>The gap</dt><dd>A seven-day gap separates training from testing, so no market falls on both sides.</dd>
+    <dt>The test set</dt><dd>Markets that closed between March 8 and September 1, 2026. There are 17,944 available, and 8,280 are used, with 15 percent held in reserve.</dd>
+    <dt>The benchmark</dt><dd>A forecast based on market price alone, fitted only on the training markets.</dd>
+    <dt>The control</dt><dd>The same circuit, trained on outcomes that have been randomly shuffled.</dd>
+    <dt>The raw data</dt><dd>Not shared. The public repository holds only fingerprints and summary counts.</dd>
+  </dl></section><section><div class="sechead"><span class="label">5.3</span><h2>The prices</h2></div>
+  <div class="prose">
+    <p>For each market used, we downloaded its price history: about one price per hour for the three days before the circuit makes its decision. This took 12,015 requests at one request per second. Of the markets fetched, 520 were dropped by rules set in advance, nearly all because no price was recorded early enough, which left exactly the 3,220 training and 8,280 test markets the design calls for.</p>
+    <p>A final check then confirmed that every price in the data comes from before the decision moment, that the counts and dates match the frozen list, and that the input strengths stay within the range already tested on the brain model. The built data file is identified by its fingerprint below.</p>
+  </div>
+  <p class="hash">Fingerprint (SHA-256) of the built data file: 0777ae92f0dd6b950e1a0e3495c72c3a89280b421265f2a53cdac3c3b9e2c686</p></section>
+<div class="pager"><a class="btn" href="safeguards.html">← Checks</a><a class="btn line" href="index.html">Back to home</a></div>
+</main>
+<footer>
+  <a class="logo" href="index.html"><img src="fly.svg" alt=""><span class="word">Flymarket</span></a>
+  <p>Luca Volpi Benowitz, University of Pennsylvania. Brain model: Shiu, P.K. et al. (2024), Nature 634, 210–219. Connectome: FlyWire. Market data: Polymarket public API, credited as the data source; this project is independent and not affiliated with or endorsed by Polymarket.</p>
+  <p>This is a simplified computer model, not a fly. Reward here is a number applied by a learning rule; nothing in the simulation experiences anything. No real money is traded at any stage. Software written largely with AI coding assistants under the author's direction.</p>
+</footer>
+</div>
+<div class="tip" id="tip" hidden></div>
+<script src="charts.js"></script>
+</body>
+</html>

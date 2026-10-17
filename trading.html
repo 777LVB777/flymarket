@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>Trading · Flymarket</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap">
+<nav>
+  <a class="brand" href="index.html">Flymarket</a>
+  <div class="navlinks"><a class="btn" href="method.html">Method</a><a class="btn" href="results.html">Results</a><a class="btn" href="trading.html" aria-current="page">Trading</a><a class="btn" href="safeguards.html">Checks</a><a class="btn" href="data.html">Data</a><a class="btn line" href="https://github.com/777LVB777/flyshi-research" target="_blank" rel="noopener">Code</a></div>
+</nav>
+<main>
+<header class="pagehead"><span class="label">Section 3</span><h1>The trading test</h1><p>This page will show how well the circuit predicts markets once the verdict is in. Until then, every number and chart here is placeholder data, included only to show the layout.</p></header>
+<p class="notice">The numbers on this page are not results. They are randomly generated placeholders. The simulated-market verdict is calculated only after all simulation jobs finish, around October 27. The real-market test then starts automatically and takes about two weeks. No results are looked at before each verdict.</p>
+<section>
+  <div class="sechead"><span class="label">3.1</span><h2>The scoring</h2></div>
+  <div class="prose">
+    <p>The circuit is trained on one set of markets and then tested on markets it has never seen. On each test market it picks YES, picks NO, or abstains. A correct pick is a win, a wrong pick is a loss, and an abstention earns and loses nothing. Profit and loss is calculated as if the circuit had bought one share at the market price, before any fees.</p>
+    <p>The circuit passes only if it beats the best possible forecast that uses the market price alone, and only if it also beats a version of itself trained on shuffled outcomes. Both rules were fixed in advance.</p>
+  </div>
+  <div class="kpis" id="kpis"></div>
+</section>
+<section>
+  <div class="fig">
+    <span class="stamp">PLACEHOLDER</span>
+    <h3><span class="n">Figure 4.</span>Running profit and loss on test markets</h3>
+    <div class="legend"><span class="sw" style="--c:var(--win)">Learning circuit, in profit</span><span class="sw" style="--c:var(--loss)">Learning circuit, in loss</span><span style="--c:var(--gray)">Learning switched off</span><span style="--c:var(--blue2)">Price-only forecast</span></div>
+    <div class="chart" id="c-pnl"><div class="hatch"></div></div>
+    <p class="cap">This chart will show the circuit's total profit or loss as it moves through the test markets, one market at a time. The line is green while the circuit is in profit and red while it is in loss. The two comparison lines show the same circuit with learning switched off, and a trader that uses the market price alone.</p>
+  </div>
+</section>
+<section>
+  <div class="fig">
+    <span class="stamp">PLACEHOLDER</span>
+    <h3><span class="n">Figure 5.</span>Each test market, in order</h3>
+    <div class="legend"><span class="sw" style="--c:var(--win)">Win</span><span class="sw" style="--c:var(--loss)">Loss</span><span class="sw" style="--c:var(--line)">Abstained</span></div>
+    <div class="strip" id="strip"></div>
+    <p class="cap">Each square is one test market. Green means the circuit's pick was right, red means it was wrong, and gray means it abstained.</p>
+  </div>
+</section>
+<section>
+  <div class="fig">
+    <span class="stamp">PLACEHOLDER</span>
+    <h3><span class="n">Table 2.</span>The three traders compared</h3>
+    <div class="tablewrap"><table id="arms"></table></div>
+    <p class="cap">This table will compare the final profit or loss of the learning circuit, the same circuit with learning switched off, and the price-only forecast. Green values are gains and red values are losses.</p>
+  </div>
+</section>
+<div class="pager"><a class="btn" href="results.html">← Results</a><a class="btn line" href="safeguards.html">Checks →</a></div>
+</main>
+<footer>
+  <a class="logo" href="index.html"><img src="fly.svg" alt=""><span class="word">Flymarket</span></a>
+  <p>Luca Volpi Benowitz, University of Pennsylvania. Brain model: Shiu, P.K. et al. (2024), Nature 634, 210–219. Connectome: FlyWire. Market data: Polymarket public API, credited as the data source; this project is independent and not affiliated with or endorsed by Polymarket.</p>
+  <p>This is a simplified computer model, not a fly. Reward here is a number applied by a learning rule; nothing in the simulation experiences anything. No real money is traded at any stage. Software written largely with AI coding assistants under the author's direction.</p>
+</footer>
+</div>
+<div class="tip" id="tip" hidden></div>
+<script src="charts.js"></script>
+</body>
+</html>

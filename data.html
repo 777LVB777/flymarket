@@ -28,8 +28,8 @@
   <dl class="facts">
     <dt>The training set</dt><dd>Markets that closed before March 1, 2026. There are 16,992 available, and 3,220 are used.</dd>
     <dt>The gap</dt><dd>A seven-day gap separates training from testing, so no market falls on both sides.</dd>
-    <dt>The test set</dt><dd>Markets that closed between March 8 and September 1, 2026. There are 17,944 available, and 8,280 are used, with 15 percent held in reserve.</dd>
-    <dt>The benchmark</dt><dd>A forecast based on market price alone, fitted only on the training markets.</dd>
+    <dt>The test set</dt><dd>Markets whose decision time falls between March 8 and August 31, 2026. There are 17,944 available, and 8,280 are used, with 15 percent held in reserve.</dd>
+    <dt>The benchmark</dt><dd>The frozen training-calibrated price: a forecast based on market price alone, fitted only on the training markets.</dd>
     <dt>The control</dt><dd>The same circuit, trained on outcomes that have been randomly shuffled. It must not beat the benchmark; if it did, the verdict would be <em>null control failed</em>: a pipeline problem, not a finding, and no edge would be reported.</dd>
     <dt>The raw data</dt><dd>Not shared. The public repository holds only fingerprints and summary counts.</dd>
   </dl></section><section><div class="sechead"><span class="label">5.3</span><h2>The prices</h2></div>

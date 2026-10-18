@@ -21,6 +21,7 @@
 
   function init() {
     document.getElementById("dash-demo").hidden = D.status !== "demo";
+    const note = document.getElementById("dash-note"); note.textContent = D.note || ""; note.hidden = !D.note;
     document.querySelectorAll("[data-range]").forEach(b => b.addEventListener("click", () => { st.range = b.dataset.range; render(); }));
     document.querySelectorAll("[data-gran]").forEach(b => b.addEventListener("click", () => { st.gran = b.dataset.gran; render(); }));
     document.querySelectorAll("[data-arm]").forEach(c => c.addEventListener("change", () => { st.show[c.dataset.arm] = c.checked; render(); }));

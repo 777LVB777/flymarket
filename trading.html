@@ -20,8 +20,10 @@
   <div class="dash-head">
     <span class="label">Learning circuit · total simulated P&amp;L</span>
     <span class="dash-big" id="dash-total">–</span>
+    <span class="dash-gross">gross, before fees and spread, not achievable as stated</span>
     <span class="dash-change" id="dash-change"></span>
     <span class="dash-asof" id="dash-asof"></span>
+    <span class="dash-note" id="dash-note" hidden></span>
   </div>
   <div class="dash-controls">
     <div class="seg" role="group" aria-label="Time range"><button data-range="1W">1W</button><button data-range="1M">1M</button><button data-range="3M">3M</button><button data-range="6M">6M</button><button data-range="ALL">All</button></div>
@@ -30,7 +32,7 @@
   <div class="fig">
     <h3><span class="n">Figure 4.</span>Running profit and loss</h3>
     <div class="chart" id="dash-line"></div>
-    <p class="cap">The solid line is the learning circuit's total profit or loss over the chosen time range. It is green when the range ends in profit and red when it ends in loss. The dashed lines are the same circuit with learning switched off, and a trader that uses the market price alone (its trading rule is a display choice, explained below). One unit is the profit or loss from buying one share at the market price, before fees.</p>
+    <p class="cap">The solid line is the learning circuit's total profit or loss over the chosen time range. It is green when the range ends in profit and red when it ends in loss. The dashed lines are the same circuit with learning switched off, and a trader that uses the market price alone (its trading rule is a display choice, explained below). One unit is the profit or loss from buying one share at the market price, gross, before fees and spread, not achievable as stated.</p>
   </div>
   <div class="dash-controls">
     <div class="seg" role="group" aria-label="Period"><button data-gran="D">Daily</button><button data-gran="W">Weekly</button><button data-gran="M">Monthly</button></div>

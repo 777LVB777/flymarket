@@ -149,6 +149,8 @@ footer p{font-size:.92rem;color:var(--muted);max-width:74ch}
 .dash-big{font-size:clamp(2.6rem,7vw,3.8rem);line-height:1.05}
 .dash-change{font-size:1.15rem}
 .dash-asof{font-size:.9rem;color:var(--muted)}
+.dash-gross{font-size:.95rem;color:var(--ink2)}
+.dash-note{font-size:.9rem;color:var(--muted);max-width:76ch}
 .dash-controls{display:flex;flex-wrap:wrap;gap:12px 24px;align-items:center;justify-content:space-between}
 .seg{display:inline-flex;border:1px solid var(--line2);border-radius:999px;padding:3px;gap:2px}
 .seg button{font:400 .95rem/1 var(--font);border:0;background:none;color:var(--ink2);padding:8px 14px;border-radius:999px;cursor:pointer}

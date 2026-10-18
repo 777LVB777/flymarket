@@ -145,6 +145,23 @@ footer p{font-size:.92rem;color:var(--muted);max-width:74ch}
   dl.facts dd{margin-bottom:10px}
 }
 
+.dash-head{display:grid;gap:4px}
+.dash-big{font-size:clamp(2.6rem,7vw,3.8rem);line-height:1.05}
+.dash-change{font-size:1.15rem}
+.dash-asof{font-size:.9rem;color:var(--muted)}
+.dash-controls{display:flex;flex-wrap:wrap;gap:12px 24px;align-items:center;justify-content:space-between}
+.seg{display:inline-flex;border:1px solid var(--line2);border-radius:999px;padding:3px;gap:2px}
+.seg button{font:400 .95rem/1 var(--font);border:0;background:none;color:var(--ink2);padding:8px 14px;border-radius:999px;cursor:pointer}
+.seg button:hover{color:var(--blue)}
+.seg button[aria-pressed="true"]{background:var(--blue);color:#fff}
+.armpick{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;font-size:.95rem;color:var(--ink2)}
+.armpick label{display:inline-flex;align-items:center;gap:6px;cursor:pointer}
+.armpick input{accent-color:var(--blue)}
+.key{display:inline-block;width:16px;height:0;border-top:2px dashed var(--c)}
+.kpis7{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+.kpis7 .v{font-size:1.45rem}
+.tall{max-height:420px;overflow-y:auto}
+.tall thead th{position:sticky;top:0;background:var(--bg)}
 .prose{display:grid;gap:14px}
 .prose p{color:var(--ink2)}
 .fig h3 .n{color:var(--blue);margin-right:6px}

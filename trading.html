@@ -30,7 +30,7 @@
   <div class="fig">
     <h3><span class="n">Figure 4.</span>Running profit and loss</h3>
     <div class="chart" id="dash-line"></div>
-    <p class="cap">The solid line is the learning circuit's total profit or loss over the chosen time range. It is green when the range ends in profit and red when it ends in loss. The dashed lines are the same circuit with learning switched off, and a trader that uses the market price alone. One unit is the profit or loss from buying one share at the market price, before fees.</p>
+    <p class="cap">The solid line is the learning circuit's total profit or loss over the chosen time range. It is green when the range ends in profit and red when it ends in loss. The dashed lines are the same circuit with learning switched off, and a trader that uses the market price alone (its trading rule is a display choice, explained below). One unit is the profit or loss from buying one share at the market price, before fees.</p>
   </div>
   <div class="dash-controls">
     <div class="seg" role="group" aria-label="Period"><button data-gran="D">Daily</button><button data-gran="W">Weekly</button><button data-gran="M">Monthly</button></div>
@@ -50,7 +50,8 @@
   <div class="sechead"><span class="label">3.1</span><h2>The scoring</h2></div>
   <div class="prose">
     <p>The circuit is trained on one set of markets and then tested on markets it has never seen. On each test market it picks YES, picks NO, or abstains. A correct pick is a win, a wrong pick is a loss, and an abstention earns and loses nothing. The dates on this page are the dates the circuit made each decision, between March 8 and August 31, 2026; the whole test is replayed offline.</p>
-    <p>The circuit passes only if it beats the best possible forecast that uses the market price alone, and also beats a version of itself trained on shuffled outcomes. Both rules were fixed in advance. Only daily totals are published here, never individual markets or prices.</p>
+    <p>The circuit passes only if its Brier score (a measure of forecast error; lower is better) beats both the frozen training-calibrated price and its own learning-off version, with the 95 percent lower bounds of both improvements above zero. A third version, trained on randomly shuffled outcomes, is a control: it must <em>not</em> beat the frozen training-calibrated price. If it does, the verdict is <em>null control failed</em>: a pipeline problem, not a finding, and no edge is reported even if the circuit passes. These rules were fixed in advance. Only daily totals are published here, never individual markets or prices.</p>
+    <p>The price-only line on this page needs a trading rule, which the preregistration does not define, because the preregistered comparison uses the forecast itself. For display, the price-only trader buys YES when its forecast is above the market price and NO when it is below, the same zero margin the circuit uses. This rule was chosen on October 18, 2026, before any real-market result existed, and it is not part of the pass rule.</p>
   </div>
 </section>
 <div class="pager"><a class="btn" href="results.html">← Results</a><a class="btn line" href="safeguards.html">Checks →</a></div>

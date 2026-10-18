@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+# The price-only trading rule below (YES when the frozen comparator's forecast is above the
+# price, NO when below, abstain when equal) was chosen on 2026-10-18, before any real-market
+# result existed. It is for display only and is not part of the preregistered pass rule.
 """Build the Trading page's pnl.json from Phase 2 job files.
 
 Input is a Phase 2 run directory as flyshi-research's

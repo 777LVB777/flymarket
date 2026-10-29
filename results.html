@@ -14,7 +14,7 @@
   <div class="navlinks"><a class="btn" href="method.html">Method</a><a class="btn" href="results.html" aria-current="page">Results</a><a class="btn" href="trading.html">Trading</a><a class="btn" href="safeguards.html">Checks</a><a class="btn" href="data.html">Data</a><a class="btn line" href="https://github.com/777LVB777/flyshi-research" target="_blank" rel="noopener">Code</a></div>
 </nav>
 <main>
-<header class="pagehead"><span class="label">Section 2</span><h1>The results</h1><p>These are the finished results so far. Each figure is explained in plain terms below it. The market-prediction verdict is not in yet; see the trading test.</p></header>
+<header class="pagehead"><span class="label">Section 2</span><h1>The results</h1><p>These are the finished results so far. Each figure is explained in plain terms below it. The simulated-market test is complete and did not pass (section 2.4). Real-market test running; results expected around November 8.</p></header>
 <section>
   <div class="sechead"><span class="label">2.1</span><h2>The circuit learns from reward</h2>
   <p>The circuit was shown two cues, A and B, and rewarded for one of them over 40 training trials. It was then tested five separate times with different random seeds. The pass threshold was set before the run at three times the normal trial-to-trial noise, which came to 6.5 spikes per second.</p></div>
@@ -51,6 +51,22 @@
         <tr><td>Left side only</td><td>100 to 500, at very high total input</td><td class="n">1 of 24</td></tr>
       </tbody></table></div>
     <p class="cap">This table shows how often the mushroom body "ignited," meaning about 65 percent of the cells that were not being stimulated began firing too. When input cells came from both sides of the brain, this happened in every run with 200 or more cells. With input cells on the left side only, it happened once in 24 runs, even at very high input. For this reason, all later experiments use left-side input only. The both-sides setup was originally caused by a bug, which we found and fixed.</p>
+  </div>
+</section>
+<section id="simulated">
+  <div class="sechead"><span class="label">2.4</span><h2>The simulated-market test did not pass</h2>
+  <p>The circuit was trained on 70 simulated markets and then tested on 180 more, in 20 separate runs, at four strengths of an extra signal: 0 (no information, a control), 0.4, 0.8 and 1.0 (the signal equals the true probability). At each strength it had to beat both the best possible forecast from price alone and its own untrained version, with the 95 percent lower bounds of both improvements above zero. The verdict was published on October 27, 2026.</p></div>
+  <div class="fig">
+    <h3><span class="n">Table 3.</span>Improvement in forecast error (Brier score) from training, on 3,600 test markets per strength</h3>
+    <div class="tablewrap"><table>
+      <thead><tr><th>Signal strength</th><th class="n">Versus price alone (95% CI)</th><th class="n">Versus learning off (95% CI)</th><th>Result</th></tr></thead>
+      <tbody>
+        <tr><td>0 (control)</td><td class="n">−0.0337 (−0.0392 to −0.0280)</td><td class="n">−0.0125 (−0.0168 to −0.0085)</td><td>No pass, as expected</td></tr>
+        <tr><td>0.4</td><td class="n">−0.0268 (−0.0322 to −0.0215)</td><td class="n">−0.0162 (−0.0206 to −0.0118)</td><td class="loss">Fail</td></tr>
+        <tr><td>0.8</td><td class="n">−0.0257 (−0.0306 to −0.0205)</td><td class="n">−0.0205 (−0.0249 to −0.0159)</td><td class="loss">Fail</td></tr>
+        <tr><td>1.0</td><td class="n">−0.0207 (−0.0254 to −0.0161)</td><td class="n">−0.0169 (−0.0215 to −0.0127)</td><td class="loss">Fail</td></tr>
+      </tbody></table></div>
+    <p class="cap">Positive numbers would mean training helped; every number here is negative. The trained circuit's forecasts were worse than the best price-only forecast and worse than its own untrained version at every signal strength, so the test did not pass. Training also made runaway firing about 30 times more common: about 4.6 percent of trials with learning, against 0.16 percent with learning off. A post-hoc comparison suggests the positive control was difficult to pass with 70 training markets; this was not a preregistered test. The full results, with every reported figure, are in the <a href="https://github.com/777LVB777/flyshi-research/blob/phase1-results/docs/design/synthetic-market-experiment.md#results" target="_blank" rel="noopener">write-up on the phase1-results branch</a>.</p>
   </div>
 </section>
 <div class="pager"><a class="btn" href="method.html">← Method</a><a class="btn line" href="trading.html">Trading →</a></div>

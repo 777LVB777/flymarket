@@ -14,9 +14,11 @@
   const ARM_STYLE = { circuit: null, off: { c: "var(--gray)", dash: "5 4" }, price: { c: "var(--blue)", dash: "2 4" } };
 
   const st = { range: "ALL", gran: "W", show: { off: true, price: true } };
-  let D;
+  let D, R = null;
 
-  fetch("pnl.json", { cache: "no-store" }).then(r => r.json()).then(j => { D = j; init(); })
+  // results.json (built by tools/make_results.py from verdict.json) supplies the other arms' gross totals for the caption
+  const results = fetch("results.json", { cache: "no-store" }).then(r => r.json()).catch(() => null);
+  fetch("pnl.json", { cache: "no-store" }).then(r => r.json()).then(j => results.then(res => { D = j; R = res; init(); }))
     .catch(() => { root.textContent = "The returns data could not be loaded."; });
 
   function init() {
@@ -40,9 +42,20 @@
       " (" + (100 * C.wins / trades(C)).toFixed(1) + " percent won); with learning off it won " + n(O.wins) + " and lost " + n(O.losses) +
       " (" + (100 * O.wins / trades(O)).toFixed(1) + " percent won). A winning share pays one unit, so each total is the number of wins minus the total paid for shares: " +
       n(C.wins) + " − " + n2(C.stake) + " for the circuit and " + n(O.wins) + " − " + n2(O.stake) + " with learning off. The price-only trader " +
-      (pTrades ? "made " + n(pTrades) + " trades." : "made no trades, so its line stays at zero.");
+      (pTrades ? "made " + n(pTrades) + " trades." : "made no trades, so its line stays at zero.") + context();
     const wk = group(D.arms.circuit.days, "W"), up = wk.filter(p => p.pnl > 0).length, down = wk.filter(p => p.pnl < 0).length;
     document.getElementById("cap5").textContent = "Over the whole test period, " + up + " of " + wk.length + " weeks were gains and " + down + " were losses.";
+  }
+
+  // Context from the verdict's reported-only gross P&L (via results.json): the other arms' totals.
+  function context() {
+    const G = R && R.phase2 && R.phase2.gross_pnl && R.phase2.gross_pnl.per_arm;
+    if (!G) return "";
+    const p = G.profit.total, o = G.learning_off.total, z = G.null_permuted.total;
+    return " " + (o > p ? "Learning switched off ended higher" : "Learning switched off ended at " + fmt(o) + " " + D.unit) +
+      ", and the version trained on shuffled outcomes, which learned nothing real, " + (z > 0 ? "also " : "") + "ended at " + fmt(z) + " " + D.unit + "." +
+      (z > 0 && o >= p ? " So a positive total here does not come from what the circuit learned." : "") +
+      " These are gross figures: there are no fees and no spread, and buying at the quoted price is not achievable as stated.";
   }
 
   function slice(days) {

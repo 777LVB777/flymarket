@@ -7,7 +7,8 @@ Inputs (both committed, aggregates only, in flyshi-research):
 
 Output: aggregates only. For each Phase 1 signal strength and for Phase 2: both paired
 Brier improvements with their 95% CIs, the MDE (where the verdict reports one), the
-pass flag, the null-control outcome and the counts. No market ID, price or per-market
+pass flag, the null-control outcome and the counts; for Phase 2 also the reported-only
+gross P&L per arm (total and per-market 95% CI). No market ID, price or per-market
 row is read or written. Every number on the site's Results page comes from this file.
 
   python3 tools/make_results.py --research ~/Projects/flyshi-research --out results.json
@@ -117,6 +118,9 @@ def phase2(v: dict) -> dict:
         "brier": {k: v["brier_test"][k] for k in ("profit", "learning_off", "null_permuted", "comparator")},
         "n_test_markets": n,
         "decisions": {arm: {"trades": a["trades"], "abstentions": a["abstentions"]} for arm, a in per_arm.items()},
+        "gross_pnl": {"label": v["gross_pnl"]["label"], "note": v["gross_pnl"]["note"],
+                      "per_arm": {arm: {"total": a["total"], "per_market": ci(a["per_market_ci"], f"phase 2 {arm} gross P&L")}
+                                  for arm, a in per_arm.items()}},
     }
 
 

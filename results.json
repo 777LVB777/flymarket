@@ -197,6 +197,45 @@
     "trades": 7103,
     "abstentions": 97
    }
+  },
+  "gross_pnl": {
+   "label": "gross, before fees and spread, not achievable as stated",
+   "note": "reported only, never gating (pre-stated 2026-10-16)",
+   "per_arm": {
+    "profit": {
+     "total": 157.02075000000002,
+     "per_market": {
+      "estimate": 0.021808437500000003,
+      "lower": 0.012406203125000006,
+      "upper": 0.03158142621527778,
+      "confidence_level": 0.95,
+      "n_resamples": 2000,
+      "resampling_unit": "market"
+     }
+    },
+    "learning_off": {
+     "total": 239.01475000000005,
+     "per_market": {
+      "estimate": 0.03319649305555556,
+      "lower": 0.023538327256944446,
+      "upper": 0.04280948003472222,
+      "confidence_level": 0.95,
+      "n_resamples": 2000,
+      "resampling_unit": "market"
+     }
+    },
+    "null_permuted": {
+     "total": 109.22075000000001,
+     "per_market": {
+      "estimate": 0.015169548611111113,
+      "lower": 0.005405778645833336,
+      "upper": 0.02497872395833333,
+      "confidence_level": 0.95,
+      "n_resamples": 2000,
+      "resampling_unit": "market"
+     }
+    }
+   }
   }
  }
 }

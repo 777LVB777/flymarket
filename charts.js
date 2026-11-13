@@ -54,47 +54,67 @@ function hover(node,text){
   });
 })();
 
-
-/* ---- trading page: DEMO placeholder data only (deterministic) ---- */
+/* ---- results page: everything below reads results.json (built by tools/make_results.py) ---- */
 (function(){
-  if(!document.getElementById("c-pnl"))return;
-  let s=7;const rnd=()=>(s=(s*16807)%2147483647)/2147483647;
-  const n=180;
-  // demo trades for the learning circuit: +1 win, -1 loss, 0 abstain (payoff sized by a fake price)
-  const trades=Array.from({length:n},()=>{const r=rnd();if(r<0.18)return{o:0,v:0};const p=0.3+rnd()*0.4;const win=rnd()<0.56;return{o:win?1:-1,v:win?(1-p):-p}});
-  const walk=(drift,vol)=>{let v=0;return Array.from({length:n},()=>v+=drift+(rnd()-0.5)*vol)};
-  let c=0;const circ=trades.map(t=>c+=t.v);
-  const off=walk(0,0.36),price=walk(0.02,0.3);
-  const W=760,H=300,L=46,R=16,T=16,B=30;
-  const all=[...circ,...off,...price,0],mn=Math.min(...all),mx=Math.max(...all);
-  const svg=el("svg",{viewBox:`0 0 ${W} ${H}`,role:"img","aria-label":"Placeholder P&L chart, demo data only"},document.getElementById("c-pnl"));
-  const x=i=>L+i/(n-1)*(W-L-R),y=v=>T+(mx-v)/(mx-mn)*(H-T-B),y0=y(0);
-  const defs=el("defs",{},svg);
-  const ca=el("clipPath",{id:"above"},defs);el("rect",{x:0,y:0,width:W,height:y0},ca);
-  const cb=el("clipPath",{id:"below"},defs);el("rect",{x:0,y:y0,width:W,height:H-y0},cb);
-  const area="M"+x(0)+","+y0+" "+circ.map((v,i)=>"L"+x(i)+","+y(v)).join(" ")+" L"+x(n-1)+","+y0+"Z";
-  const line=circ.map((v,i)=>x(i)+","+y(v)).join(" ");
-  el("path",{d:area,fill:"var(--win)",opacity:.1,"clip-path":"url(#above)"},svg);
-  el("path",{d:area,fill:"var(--loss)",opacity:.1,"clip-path":"url(#below)"},svg);
-  [[off,"var(--gray)"],[price,"var(--blue2)"]].forEach(([d,col])=>el("polyline",{points:d.map((v,i)=>x(i)+","+y(v)).join(" "),fill:"none",stroke:col,"stroke-width":1.5},svg));
-  el("polyline",{points:line,fill:"none",stroke:"var(--win)","stroke-width":2,"clip-path":"url(#above)"},svg);
-  el("polyline",{points:line,fill:"none",stroke:"var(--loss)","stroke-width":2,"clip-path":"url(#below)"},svg);
-  el("line",{x1:L,x2:W-R,y1:y0,y2:y0,class:"axis"},svg);
-  el("text",{x:L-8,y:y0+4,"text-anchor":"end"},svg).textContent="0";
-  [0,45,90,135,179].forEach(t=>el("text",{x:x(t),y:H-8,"text-anchor":"middle"},svg).textContent="#"+(t+1));
-  el("text",{x:L+4,y:T+10},svg).textContent="DEMO · placeholder values";
+  if(!document.querySelector("[data-r],#t3,#t4,#c-brier"))return;
+  const num=v=>(v<0?"−":v>0?"+":"")+Math.abs(v).toFixed(4);
+  const F={int:v=>v.toLocaleString("en-US"),b4:num,u3:v=>v.toFixed(3),u4:v=>v.toFixed(4),text:v=>v};
+  const ci=c=>`${num(c.lower)} to ${num(c.upper)}`;
+  const get=(o,path)=>path.split(".").reduce((a,k)=>a==null?a:a[k],o);
+  const td=(tr,txt,cls)=>{const e=document.createElement("td");if(cls)e.className=cls;e.textContent=txt;tr.appendChild(e);return e};
+  fetch("results.json",{cache:"no-store"}).then(r=>r.json()).then(R=>{
+    document.querySelectorAll("[data-r]").forEach(e=>{const v=get(R,e.dataset.r);if(v!=null)e.textContent=(F[e.dataset.f]||String)(v)});
+    const t3=document.getElementById("t3");
+    if(t3)for(const s of R.phase1.strengths){const tr=document.createElement("tr");
+      td(tr,s.role==="null control"?"0 (control)":s.strength.toFixed(1));
+      td(tr,`${num(s.vs_price.estimate)} (${ci(s.vs_price)})`,"n");
+      td(tr,`${num(s.vs_learning_off.estimate)} (${ci(s.vs_learning_off)})`,"n");
+      td(tr,s.role==="null control"?(s.passes?"Passed: pipeline problem":"No pass, as expected"):(s.passes?"Pass":"Fail"),s.role==="null control"||s.passes?"":"loss");
+      t3.appendChild(tr)}
+    const P=R.phase2,t4=document.getElementById("t4");
+    if(t4){[["The frozen training-calibrated price",P.vs_comparator,P.vs_comparator_mde],["Learning off",P.vs_learning_off,P.vs_learning_off_mde]].forEach(([n,c,m])=>{
+        const tr=document.createElement("tr");td(tr,n);td(tr,`${num(c.estimate)} (${ci(c)})`,"n");td(tr,m.toFixed(4),"n");
+        td(tr,c.lower>0?"Lower bound above zero":"Fail",c.lower>0?"":"loss");t4.appendChild(tr)});
+      const N=P.null_control;
+      document.getElementById("t4-null").textContent=`Null control, the same circuit trained on shuffled outcomes, compared with the frozen training-calibrated price: ${num(N.vs_comparator.estimate)} (${ci(N.vs_comparator)}). `+
+        (N.passes?"It passed, which would mean a pipeline problem.":"It did not pass, as expected, so the control was clean.")}
+    brier(R);
+  }).catch(()=>{const b=document.getElementById("c-brier");if(b)b.textContent="The results data could not be loaded."});
 
-  const wins=trades.filter(t=>t.o===1).length,losses=trades.filter(t=>t.o===-1).length,abst=n-wins-losses;
-  const pnl=circ.at(-1),fmt=v=>(v>=0?"+":"−")+Math.abs(v).toFixed(2);
-  document.getElementById("kpis").innerHTML=
-    `<div class="kpi"><span class="label">Wins</span><span class="v win">${wins}</span></div>`+
-    `<div class="kpi"><span class="label">Losses</span><span class="v loss">${losses}</span></div>`+
-    `<div class="kpi"><span class="label">Hit rate</span><span class="v">${(100*wins/(wins+losses)).toFixed(1)}%</span></div>`+
-    `<div class="kpi"><span class="label">Gross P&amp;L, units</span><span class="v ${pnl>=0?"win":"loss"}">${fmt(pnl)}</span></div>`;
-  const strip=document.getElementById("strip");
-  trades.forEach((t,i)=>{const e=document.createElement("i");e.style.background=t.o===1?"var(--win)":t.o===-1?"var(--loss)":"var(--line)";strip.appendChild(e);
-    hover(e,`Trade #${i+1}: ${t.o===1?"win "+fmt(t.v):t.o===-1?"loss "+fmt(t.v):"abstained"}`)});
-  const arms=[["Learning circuit",pnl],["Learning off",off.at(-1)],["Price-only trader",price.at(-1)]];
-  document.getElementById("arms").innerHTML="<thead><tr><th>Arm</th><th class=n>Gross P&amp;L, units</th><th class=n>vs. price-only</th></tr></thead><tbody>"+
-    arms.map(([a,v])=>{const d=v-price.at(-1);return `<tr><td>${a}</td><td class="n ${v>=0?"win":"loss"}">${fmt(v)}</td><td class="n ${a==="Price-only trader"?"":d>=0?"win":"loss"}">${a==="Price-only trader"?"—":fmt(d)}</td></tr>`}).join("")+"</tbody>";
+  /* Figure 6: Brier improvement with 95% intervals, both comparisons, Phase 1 strengths and Phase 2 */
+  function brier(R){
+    const box=document.getElementById("c-brier");if(!box)return;
+    const rows=[{g:"Simulated markets"}];
+    for(const s of R.phase1.strengths)rows.push({n:s.role==="null control"?"Signal 0 (control)":"Signal "+s.strength.toFixed(1),a:s.vs_price,b:s.vs_learning_off,ga:"Simulated markets, signal "+s.strength.toFixed(1)});
+    rows.push({g:"Real markets"});
+    const P=R.phase2;rows.push({n:P.n_test_markets.toLocaleString("en-US")+" markets",a:P.vs_comparator,b:P.vs_learning_off,ma:P.vs_comparator_mde,mb:P.vs_learning_off_mde,ga:"Real markets"});
+    const vals=rows.flatMap(r=>r.a?[r.a.lower,r.a.upper,r.b.lower,r.b.upper,r.ma||0,r.mb||0]:[]).concat([0]);
+    const u=0.01,min=Math.floor(Math.min(...vals)/u)*u,max=Math.max(u,Math.ceil(Math.max(...vals)/u)*u);
+    let lastW=0;
+    function draw(){
+      const W=Math.round(Math.max(280,Math.min(760,box.clientWidth||760)));if(W===lastW)return;lastW=W;box.textContent="";
+      const narrow=W<480,step=narrow?0.02:0.01,L=narrow?118:170,R=narrow?12:18,T=8,rowH=40,gH=26,B=34;
+      const H=T+rows.reduce((a,r)=>a+(r.g?gH:rowH),0)+B;
+      const svg=el("svg",{viewBox:`0 0 ${W} ${H}`,role:"img",style:"min-width:0","aria-label":"Improvement in Brier score from training with 95 percent intervals, for each simulated signal strength and for the real markets, compared with the price benchmark and with learning off"},box);
+      const x=v=>L+(v-min)/(max-min)*(W-L-R),yEnd=H-B;
+      for(let t=Math.ceil(min/step-1e-9)*step;t<=max+1e-9;t+=step){const tv=Math.round(t*100)/100;
+        el("line",{x1:x(tv),x2:x(tv),y1:T,y2:yEnd,class:Math.abs(tv)<1e-9?"axis":"grid"},svg);
+        el("text",{x:x(tv),y:yEnd+18,"text-anchor":"middle"},svg).textContent=Math.abs(tv)<1e-9?"0":(tv<0?"−":"+")+Math.abs(tv).toFixed(2)}
+      el("text",{x:W-R,y:H-2,"text-anchor":"end"},svg).textContent=narrow?"Brier improvement":"Brier improvement (positive: training helped)";
+      let y=T;
+      for(const r of rows){
+        if(r.g){const t=el("text",{x:4,y:y+gH-8},svg);t.textContent=r.g;t.style.fill="var(--blue)";
+          if(y>T)el("line",{x1:0,x2:W-R,y1:y+2,y2:y+2,stroke:"var(--line)"},svg);y+=gH;continue}
+        el("text",{x:L-12,y:y+rowH/2+4,"text-anchor":"end"},svg).textContent=r.n;
+        [[r.a,r.ma,"var(--blue)",y+rowH/2-7,"compared with the price benchmark"],[r.b,r.mb,"var(--blue2)",y+rowH/2+7,"compared with learning off"]].forEach(([c,m,col,cy,lab])=>{
+          if(m){const band=el("rect",{x:x(0),y:cy-6,width:x(m)-x(0),height:12,class:"thr"},svg);hover(band,`${r.ga}, ${lab}: smallest detectable improvement ${m.toFixed(4)}`)}
+          el("line",{x1:x(c.lower),x2:x(c.upper),y1:cy,y2:cy,stroke:col,"stroke-width":2},svg);
+          [c.lower,c.upper].forEach(v=>el("line",{x1:x(v),x2:x(v),y1:cy-4,y2:cy+4,stroke:col,"stroke-width":2},svg));
+          const d=el("circle",{cx:x(c.estimate),cy,r:5,fill:col,stroke:"var(--bg)","stroke-width":1.5},svg);
+          const hit=el("rect",{x:x(c.lower)-6,y:cy-7,width:x(c.upper)-x(c.lower)+12,height:14,fill:"transparent"},svg);
+          const text=`${r.ga}, ${lab}: ${num(c.estimate)} (95% CI ${ci(c)})`;hover(hit,text);hover(d,text)});
+        y+=rowH}
+    }
+    draw();let tm;addEventListener("resize",()=>{clearTimeout(tm);tm=setTimeout(draw,120)});
+  }
 })();

@@ -109,16 +109,11 @@ td.n,th.n{text-align:right}
 .keyrow{display:flex;gap:20px;flex-wrap:wrap;font-size:.95rem;color:var(--ink2)}
 .keyrow span::before{content:"";display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:8px;background:var(--c)}
 
-/* demo */
-.stamp{position:absolute;top:18px;right:18px;font-size:.74rem;letter-spacing:.18em;color:var(--blue);border:1px solid var(--blue);padding:4px 10px;border-radius:999px;background:var(--bg)}
-.hatch{position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(135deg, transparent 0 14px, rgba(46,92,255,.045) 14px 15px)}
-.notice{border:1px solid var(--blue);border-radius:10px;padding:16px 18px;color:var(--ink2);background:var(--tint)}
+/* trading */
 .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
 .kpi{border:1px solid var(--line);border-radius:10px;padding:16px;display:grid;gap:6px}
 .kpi .label{color:var(--muted)}
 .kpi .v{font-size:1.9rem;line-height:1.05}
-.strip{display:grid;grid-template-columns:repeat(60,1fr);gap:2px}
-.strip i{display:block;aspect-ratio:1/1.6;border-radius:1px}
 
 .big{font-size:clamp(2.6rem,7vw,4.2rem);line-height:1;color:var(--blue)}
 .numrow{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
@@ -140,8 +135,7 @@ footer p{font-size:.92rem;color:var(--muted);max-width:74ch}
   .status,.kpis{grid-template-columns:1fr 1fr}.stat:nth-child(2){border-right:0}.stat:nth-child(-n+2){border-bottom:1px solid var(--line)}
   .flow{grid-template-columns:1fr}.node:not(:last-child)::after{content:"↓";right:auto;left:50%;top:auto;bottom:-13px;transform:translateX(-50%)}
   .figs,.numrow,.cards{grid-template-columns:1fr}
-  .strip{grid-template-columns:repeat(30,1fr)}
-  dl.facts{grid-template-columns:1fr;gap:2px}
+    dl.facts{grid-template-columns:1fr;gap:2px}
   dl.facts dd{margin-bottom:10px}
 }
 

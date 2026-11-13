@@ -22,14 +22,14 @@
   </div>
   <div class="prose">
     <p>We scanned every closed market on Polymarket, about 4.23 million in total. Of these, 1.44 million ended with a clear YES or NO outcome. A market qualifies for the study if at least $10,000 was traded on it, and only one market is kept per event so that closely related questions are not counted twice. That leaves 40,893 markets.</p>
-    <p>The data is historical and read only. Polymarket support confirmed in writing that this use is permitted. Market outcomes stay sealed until the test is run.</p>
+    <p>The data is historical and read only. Polymarket support confirmed in writing that this use is permitted. Market outcomes stayed sealed until the test was run.</p>
   </div>
   <p class="hash">Fingerprint (SHA-256) of the frozen market list: f3d41123e20ef10b0651b24531e909cb41691e94e1c83df7b0f83a3f2d5975f8</p></section><section><div class="sechead"><span class="label">5.2</span><h2>The split</h2></div>
   <dl class="facts">
     <dt>The training set</dt><dd>Markets that resolved before March 1, 2026 (00:00 UTC). There are 16,992 available, and 3,220 are used.</dd>
     <dt>The gap</dt><dd>A seven-day gap separates training from testing, so no market falls on both sides.</dd>
     <dt>The test set</dt><dd>Markets whose decision time falls between March 8 and August 31, 2026. There are 17,944 available, and 8,280 are used, with 15 percent held in reserve.</dd>
-    <dt>The benchmark</dt><dd>The frozen training-calibrated price: a forecast based on market price alone, fitted only on the training markets.</dd>
+    <dt>The benchmark</dt><dd>The frozen training-calibrated price: a forecast based on market price alone, fitted only on the training markets. A check fixed in advance found that calibrating did not make the price more accurate on the training markets, so the frozen benchmark is the market price itself.</dd>
     <dt>The control</dt><dd>The same circuit, trained on outcomes that have been randomly shuffled. It must not beat the benchmark; if it did, the verdict would be <em>null control failed</em>: a pipeline problem, not a finding, and no edge would be reported.</dd>
     <dt>The raw data</dt><dd>Not shared. The public repository holds only fingerprints and summary counts.</dd>
   </dl></section><section><div class="sechead"><span class="label">5.3</span><h2>The prices</h2></div>
@@ -43,7 +43,7 @@
 <footer>
   <a class="logo" href="index.html"><img src="fly.svg" alt=""><span class="word">Flymarket</span></a>
   <p>Luca Volpi Benowitz, University of Pennsylvania. Brain model: Shiu, P.K. et al. (2024), Nature 634, 210–219. Connectome: FlyWire. Market data: Polymarket public API, credited as the data source; this project is independent and not affiliated with or endorsed by Polymarket.</p>
-  <p>This is a simplified computer model, not a fly. Reward here is a number applied by a learning rule; nothing in the simulation experiences anything. No real money is traded at any stage. Software written largely with AI coding assistants under the author's direction.</p>
+  <p>This is a simplified computer model of a fly's wiring, not a fly or an upload. Reward here is a number applied by a learning rule; nothing in the simulation experiences anything. No real money is traded at any stage. Software written largely with AI coding assistants under the author's direction.</p>
 </footer>
 </div>
 <div class="tip" id="tip" hidden></div>

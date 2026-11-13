@@ -14,7 +14,7 @@
   <div class="navlinks"><a class="btn" href="method.html">Method</a><a class="btn" href="results.html" aria-current="page">Results</a><a class="btn" href="trading.html">Trading</a><a class="btn" href="safeguards.html">Checks</a><a class="btn" href="data.html">Data</a><a class="btn line" href="https://github.com/777LVB777/flyshi-research" target="_blank" rel="noopener">Code</a></div>
 </nav>
 <main>
-<header class="pagehead"><span class="label">Section 2</span><h1>The results</h1><p>These are the finished results so far. Each figure is explained in plain terms below it. The simulated-market test is complete and did not pass (section 2.4). Real-market test running; results expected around November 8.</p></header>
+<header class="pagehead"><span class="label">Section 2</span><h1>The results</h1><p>These are the final results. Each figure is explained in plain terms below it. All three tests are complete. The learning test passed (section 2.1). The simulated-market test did not pass (section 2.4), and the real-market test did not pass (section 2.5).</p></header>
 <section>
   <div class="sechead"><span class="label">2.1</span><h2>The circuit learns from reward</h2>
   <p>The circuit was shown two cues, A and B, and rewarded for one of them over 40 training trials. It was then tested five separate times with different random seeds. The pass threshold was set before the run at three times the normal trial-to-trial noise, which came to 6.5 spikes per second.</p></div>
@@ -60,13 +60,26 @@
     <h3><span class="n">Table 3.</span>Improvement in forecast error (Brier score) from training, on 3,600 test markets per strength</h3>
     <div class="tablewrap"><table>
       <thead><tr><th>Signal strength</th><th class="n">Versus price alone (95% CI)</th><th class="n">Versus learning off (95% CI)</th><th>Result</th></tr></thead>
-      <tbody>
-        <tr><td>0 (control)</td><td class="n">−0.0337 (−0.0392 to −0.0280)</td><td class="n">−0.0125 (−0.0168 to −0.0085)</td><td>No pass, as expected</td></tr>
-        <tr><td>0.4</td><td class="n">−0.0268 (−0.0322 to −0.0215)</td><td class="n">−0.0162 (−0.0206 to −0.0118)</td><td class="loss">Fail</td></tr>
-        <tr><td>0.8</td><td class="n">−0.0257 (−0.0306 to −0.0205)</td><td class="n">−0.0205 (−0.0249 to −0.0159)</td><td class="loss">Fail</td></tr>
-        <tr><td>1.0</td><td class="n">−0.0207 (−0.0254 to −0.0161)</td><td class="n">−0.0169 (−0.0215 to −0.0127)</td><td class="loss">Fail</td></tr>
-      </tbody></table></div>
-    <p class="cap">Positive numbers would mean training helped; every number here is negative. The trained circuit's forecasts were worse than the best price-only forecast and worse than its own untrained version at every signal strength, so the test did not pass. Training also made runaway firing about 30 times more common: about 4.6 percent of trials with learning, against 0.16 percent with learning off. A post-hoc comparison suggests the positive control was difficult to pass with 70 training markets; this was not a preregistered test. The full results, with every reported figure, are in the <a href="https://github.com/777LVB777/flyshi-research/blob/phase1-results/docs/design/synthetic-market-experiment.md#results" target="_blank" rel="noopener">write-up on the phase1-results branch</a>.</p>
+      <tbody id="t3"></tbody></table></div>
+    <p class="cap">Positive numbers would mean training helped; every number here is negative. The trained circuit's forecasts were worse than the best price-only forecast and worse than its own untrained version at every signal strength, so the test did not pass. Training also made runaway firing about 30 times more common: about 4.6 percent of trials with learning, against 0.16 percent with learning off. A post-hoc comparison suggests the positive control was difficult to pass with 70 training markets; this was not a preregistered test. The full results, with every reported figure, are in the <a href="https://github.com/777LVB777/flyshi-research/blob/main/docs/design/synthetic-market-experiment.md#results" target="_blank" rel="noopener">write-up</a>.</p>
+  </div>
+</section>
+<section id="real">
+  <div class="sechead"><span class="label">2.5</span><h2>The real-market test did not pass</h2>
+  <p>The circuit was trained on 70 real Polymarket markets that had already closed, and then tested on 180 later markets it had never seen, in 40 separate runs: <span data-r="phase2.n_test_markets" data-f="int">–</span> test markets in all, with decisions between March 8 and August 31, 2026. For each market it saw three numbers: the price, how much the price had changed over the previous day, and the number of days until the market was scheduled to close. To pass, its forecasts had to beat both the frozen training-calibrated price and its own learning-off version, with the 95 percent lower bounds of both improvements above zero. The verdict was published on November 8, 2026.</p></div>
+  <div class="fig">
+    <h3><span class="n">Table 4.</span>Improvement in forecast error (Brier score) from training, on <span data-r="phase2.n_test_markets" data-f="int">–</span> real test markets</h3>
+    <div class="tablewrap"><table>
+      <thead><tr><th>Compared with</th><th class="n">Improvement (95% CI)</th><th class="n">Smallest detectable improvement</th><th>Result</th></tr></thead>
+      <tbody id="t4"></tbody></table></div>
+    <p class="cap" id="t4-null">–</p>
+    <p class="cap">Positive numbers would mean training helped. Both numbers are negative and both intervals lie entirely below zero: the trained circuit's forecasts were worse than the market price and worse than its own untrained version, so the test did not pass. The smallest detectable improvement is the improvement the test had an 80 percent chance of finding at its actual size. The preregistered verdict reads: <q data-r="phase2.reading" data-f="text">–</q> This is not evidence of no edge: an improvement smaller than about <span data-r="phase2.vs_comparator_mde" data-f="u3">–</span> could have been missed. A check fixed in advance found that calibrating the price on the training markets did not make it more accurate there, so the frozen benchmark is the market price itself. The circuit saw only three numbers per market, so this result says nothing about a circuit given outside information. The full results are in the <a href="https://github.com/777LVB777/flyshi-research/blob/main/docs/design/phase2-preregistration.md#phase-2-results-written-2026-11-12-after-the-verdict" target="_blank" rel="noopener">write-up</a>.</p>
+  </div>
+  <div class="fig">
+    <h3><span class="n">Figure 6.</span>Improvement from training in both market tests, with 95 percent intervals</h3>
+    <div class="legend"><span class="sw" style="--c:var(--blue)">Compared with the price benchmark</span><span class="sw" style="--c:var(--blue2)">Compared with learning off</span></div>
+    <div class="chart" id="c-brier"></div>
+    <p class="cap">Each dot is one improvement in forecast error from training, and the line through it is its 95 percent interval. Points to the right of zero would mean training helped. In the simulated markets the price benchmark is the best possible forecast from price alone; in the real markets it is the frozen benchmark, which is the market price. Every point and every interval lies left of zero, in both tests. The thin shaded band on the real-market rows runs from zero to the smallest improvement that test could detect.</p>
   </div>
 </section>
 <div class="pager"><a class="btn" href="method.html">← Method</a><a class="btn line" href="trading.html">Trading →</a></div>
@@ -74,7 +87,7 @@
 <footer>
   <a class="logo" href="index.html"><img src="fly.svg" alt=""><span class="word">Flymarket</span></a>
   <p>Luca Volpi Benowitz, University of Pennsylvania. Brain model: Shiu, P.K. et al. (2024), Nature 634, 210–219. Connectome: FlyWire. Market data: Polymarket public API, credited as the data source; this project is independent and not affiliated with or endorsed by Polymarket.</p>
-  <p>This is a simplified computer model, not a fly. Reward here is a number applied by a learning rule; nothing in the simulation experiences anything. No real money is traded at any stage. Software written largely with AI coding assistants under the author's direction.</p>
+  <p>This is a simplified computer model of a fly's wiring, not a fly or an upload. Reward here is a number applied by a learning rule; nothing in the simulation experiences anything. No real money is traded at any stage. Software written largely with AI coding assistants under the author's direction.</p>
 </footer>
 </div>
 <div class="tip" id="tip" hidden></div>

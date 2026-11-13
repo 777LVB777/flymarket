@@ -14,8 +14,7 @@
   <div class="navlinks"><a class="btn" href="method.html">Method</a><a class="btn" href="results.html">Results</a><a class="btn" href="trading.html" aria-current="page">Trading</a><a class="btn" href="safeguards.html">Checks</a><a class="btn" href="data.html">Data</a><a class="btn line" href="https://github.com/777LVB777/flyshi-research" target="_blank" rel="noopener">Code</a></div>
 </nav>
 <main>
-<header class="pagehead"><span class="label">Section 3</span><h1>The trading test</h1><p>This page shows how the circuit's simulated trades on held-out real markets add up, day by day, week by week and month by month, compared with two benchmarks.</p></header>
-<p class="notice" id="dash-demo">The numbers on this page are placeholders, generated at random to show the layout. Real-market test running; results expected around November 8. No results are looked at before each verdict.</p>
+<header class="pagehead"><span class="label">Section 3</span><h1>The trading test</h1><p>This page shows how the circuit's simulated trades on the held-out real markets added up, day by day, week by week and month by month, compared with two benchmarks. The markets were replayed offline after they closed; no real money was traded.</p></header>
 <section id="dash">
   <div class="dash-head">
     <span class="label">Learning circuit · total simulated P&amp;L</span>
@@ -32,7 +31,8 @@
   <div class="fig">
     <h3><span class="n">Figure 4.</span>Running profit and loss</h3>
     <div class="chart" id="dash-line"></div>
-    <p class="cap">The solid line is the learning circuit's total profit or loss over the chosen time range. It is green when the range ends in profit and red when it ends in loss. The dashed lines are the same circuit with learning switched off, and a trader that uses the market price alone (its trading rule is a display choice, explained below). One unit is the profit or loss from buying one share at the market price, gross, before fees and spread, not achievable as stated.</p>
+    <p class="cap">The solid line is the learning circuit's running total over the chosen time range. It is green when the range ends in profit and red when it ends in loss. The dashed lines are the same circuit with learning switched off, and a trader that uses the market price alone (its trading rule is a display choice, explained below). One unit is the profit or loss from buying one share at the market price, gross, before fees and spread, not achievable as stated.</p>
+    <p class="cap" id="cap4"></p>
   </div>
   <div class="dash-controls">
     <div class="seg" role="group" aria-label="Period"><button data-gran="D">Daily</button><button data-gran="W">Weekly</button><button data-gran="M">Monthly</button></div>
@@ -41,7 +41,7 @@
   <div class="fig">
     <h3><span class="n">Figure 5.</span>Profit and loss per period</h3>
     <div class="chart" id="dash-bars"></div>
-    <p class="cap">Each bar is one day, week or month. Bars above the line are gains and bars below are losses. Return is the profit or loss divided by the total amount staked in that period. Profit, loss and return are gross, before fees and spread, not achievable as stated.</p>
+    <p class="cap">Each bar is one day, week or month of the learning circuit's trades. Bars above the line are gains and bars below are losses. Return is the profit or loss divided by the total amount staked in that period. Profit, loss and return are gross, before fees and spread, not achievable as stated. <span id="cap5"></span></p>
   </div>
   <div class="fig">
     <h3><span class="n">Table 2.</span>Returns by period, most recent first</h3>
@@ -53,9 +53,9 @@
   <div class="sechead"><span class="label">3.1</span><h2>The scoring</h2></div>
   <div class="prose">
     <p>The circuit is trained on one set of markets and then tested on markets it has never seen. On each test market it picks YES, picks NO, or abstains. A correct pick is a win, a wrong pick is a loss, and an abstention earns and loses nothing. The dates on this page are the dates the circuit made each decision, between March 8 and August 31, 2026; the whole test is replayed offline.</p>
-    <p>The circuit passes only if its Brier score (a measure of forecast error; lower is better) beats both the frozen training-calibrated price and its own learning-off version, with the 95 percent lower bounds of both improvements above zero. A third version, trained on randomly shuffled outcomes, is a control: it must <em>not</em> beat the frozen training-calibrated price. If it does, the verdict is <em>null control failed</em>: a pipeline problem, not a finding, and no edge is reported even if the circuit passes. These rules were fixed in advance. Only daily totals are published here, never individual markets or prices.</p>
+    <p>The circuit passes only if its Brier score (a measure of forecast error; lower is better) beats both the frozen training-calibrated price and its own learning-off version, with the 95 percent lower bounds of both improvements above zero. A third version, trained on randomly shuffled outcomes, is a control: it must <em>not</em> beat the frozen training-calibrated price. If it does, the verdict is <em>null control failed</em>: a pipeline problem, not a finding, and no edge is reported even if the circuit passes. These rules were fixed in advance. The circuit did not pass, and the control was clean (see <a href="results.html#real">Results, section 2.5</a>). Only daily totals are published here, never individual markets or prices.</p>
     <p>The profit and loss shown on this page is reported, not tested. The verdict depends only on the Brier score comparisons above, so a rising or falling P&amp;L line on its own does not mean the circuit passed or failed.</p>
-    <p>The price-only line on this page needs a trading rule, which the preregistration does not define, because the preregistered comparison uses the forecast itself. For display, the price-only trader buys YES when its forecast is above the market price and NO when it is below, the same zero margin the circuit uses. This rule was chosen on October 18, 2026, before any real-market result existed, and it is not part of the pass rule.</p>
+    <p>The price-only line on this page needs a trading rule, which the preregistration does not define, because the preregistered comparison uses the forecast itself. For display, the price-only trader buys YES when its forecast is above the market price and NO when it is below, the same zero margin the circuit uses. This rule was chosen on October 18, 2026, before any real-market result existed, and it is not part of the pass rule. A check fixed in advance found that calibrating the price on the training markets did not make it more accurate, so the frozen benchmark is the market price itself. Its forecast therefore always equals the price, this rule never trades, and the price-only line stays at zero.</p>
   </div>
 </section>
 <div class="pager"><a class="btn" href="results.html">← Results</a><a class="btn line" href="safeguards.html">Checks →</a></div>
@@ -63,7 +63,7 @@
 <footer>
   <a class="logo" href="index.html"><img src="fly.svg" alt=""><span class="word">Flymarket</span></a>
   <p>Luca Volpi Benowitz, University of Pennsylvania. Brain model: Shiu, P.K. et al. (2024), Nature 634, 210–219. Connectome: FlyWire. Market data: Polymarket public API, credited as the data source; this project is independent and not affiliated with or endorsed by Polymarket.</p>
-  <p>This is a simplified computer model, not a fly. Reward here is a number applied by a learning rule; nothing in the simulation experiences anything. No real money is traded at any stage. Software written largely with AI coding assistants under the author's direction.</p>
+  <p>This is a simplified computer model of a fly's wiring, not a fly or an upload. Reward here is a number applied by a learning rule; nothing in the simulation experiences anything. No real money is traded at any stage. Software written largely with AI coding assistants under the author's direction.</p>
 </footer>
 </div>
 <div class="tip" id="tip" hidden></div>

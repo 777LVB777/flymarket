@@ -33,7 +33,7 @@
   <div class="prose">
     <p>This project uses a published computer model of the adult fruit-fly brain. The model has about 139,000 neurons, and its wiring comes from the FlyWire connectome, a complete map of the fly brain's connections. The original model does not learn. We added a simple learning rule to one part of it, the mushroom body, which is the brain region flies use to learn from reward and punishment.</p>
     <p>We then ask a single question. If the circuit is shown prediction markets and rewarded when it picks the correct outcome, does it end up predicting better than the market price alone? We test this first on simulated markets, where the right answer is known, and then on historical Polymarket markets.</p>
-    <p>Every pass or fail rule was written down and published before the test it governs was run. The learning test is complete and passed. The simulated-market test is complete and did not pass; its verdict was published on October 27, 2026. The real-market test is running, and its results are expected around November 8.</p>
+    <p>Every pass or fail rule was written down and published before the test it governs was run. All three tests are complete. The learning test passed. The simulated-market test did not pass; its verdict was published on October 27, 2026. The real-market test did not pass; its verdict was published on November 8, 2026. On the held-out real markets, training made the circuit's forecasts worse than the market price and worse than its own untrained version. This is not evidence of no edge: an improvement smaller than the test could detect may have been missed.</p>
   </div>
 </section>
 <section aria-label="Project status">
@@ -41,16 +41,16 @@
   <div class="status">
     <div class="stat"><span class="label">The learning test</span><span class="v">Passed</span><span class="s">The effect was about 24 times larger than the preset threshold.</span></div>
     <div class="stat"><span class="label">The simulated markets</span><span class="v">Complete, did not pass</span><span class="s">Verdict published October 27; see <a href="results.html#simulated">Results</a>.</span></div>
-    <div class="stat"><span class="label">The real markets</span><span class="v">Running</span><span class="s">Real-market test running; results expected around November 8. It draws on 11,500 markets with checked price histories (3,220 for training, 8,280 for testing).</span></div>
-    <div class="stat"><span class="label">The cost</span><span class="v">≈ $110</span><span class="s">Estimated server cost so far (Phase 1 complete, Phase 2 running), out of a $200 total budget.</span></div>
+    <div class="stat"><span class="label">The real markets</span><span class="v">Complete, did not pass</span><span class="s">Verdict published November 8; see <a href="results.html#real">Results</a>.</span></div>
+    <div class="stat"><span class="label">The cost</span><span class="v">≈ $180</span><span class="s">Total server cost, final, out of a $200 budget. The server was shut down on November 9.</span></div>
   </div>
 </section>
 <section>
   <div class="sechead"><span class="label">Contents</span><h2>The sections of this site</h2></div>
   <div class="cards">
     <a class="card" href="method.html"><span class="label">1</span><h3>The method</h3><p>How a market is turned into input for the fly circuit, and how the circuit learns from the outcome.</p><span class="go">Read →</span></a>
-    <a class="card" href="results.html"><span class="label">2</span><h3>The results</h3><p>The learning test passed; the simulated-market test did not.</p><span class="go">Read →</span></a>
-    <a class="card" href="trading.html"><span class="label">3</span><h3>The trading test</h3><p>How the circuit will be scored on markets. This page shows placeholder data until the verdict.</p><span class="go">Read →</span></a>
+    <a class="card" href="results.html"><span class="label">2</span><h3>The results</h3><p>The learning test passed; the simulated-market and real-market tests did not.</p><span class="go">Read →</span></a>
+    <a class="card" href="trading.html"><span class="label">3</span><h3>The trading test</h3><p>The circuit's simulated trades on the held-out real markets, day by day. The profit and loss is reported, not tested.</p><span class="go">Read →</span></a>
     <a class="card" href="safeguards.html"><span class="label">4</span><h3>The checks</h3><p>Every test we set ourselves, including the mistakes we found, in the order they happened.</p><span class="go">Read →</span></a>
     <a class="card" href="data.html"><span class="label">5</span><h3>The data</h3><p>Which Polymarket markets are used, how they were chosen, and how they are split for training and testing.</p><span class="go">Read →</span></a>
     <a class="card" href="https://github.com/777LVB777/flyshi-research" target="_blank" rel="noopener"><span class="label">6</span><h3>The code</h3><p>The full public repository, including the preregistration documents.</p><span class="go">Open on GitHub ↗</span></a>
@@ -61,7 +61,7 @@
 <footer>
   <a class="logo" href="index.html"><img src="fly.svg" alt=""><span class="word">Flymarket</span></a>
   <p>Luca Volpi Benowitz, University of Pennsylvania. Brain model: Shiu, P.K. et al. (2024), Nature 634, 210–219. Connectome: FlyWire. Market data: Polymarket public API, credited as the data source; this project is independent and not affiliated with or endorsed by Polymarket.</p>
-  <p>This is a simplified computer model, not a fly. Reward here is a number applied by a learning rule; nothing in the simulation experiences anything. No real money is traded at any stage. Software written largely with AI coding assistants under the author's direction.</p>
+  <p>This is a simplified computer model of a fly's wiring, not a fly or an upload. Reward here is a number applied by a learning rule; nothing in the simulation experiences anything. No real money is traded at any stage. Software written largely with AI coding assistants under the author's direction.</p>
 </footer>
 </div>
 <div class="tip" id="tip" hidden></div>

@@ -1,0 +1,202 @@
+{
+ "sources": {
+  "phase1": {
+   "path": "repro/mushroom_body/results/synthetic_market_a325e6b206/verdict_phase1.json",
+   "sha256": "fde81bea6f61ce194aed89deedf1ef8022bafe3a3bb3955e8d0cc9de216f1bf0"
+  },
+  "phase2": {
+   "path": "repro/real_market/results/phase2_0777ae92f0dd/verdict.json",
+   "sha256": "6299398e785033b961ff4c5fcd76a703fc1fb3e9f3b93d8ae49be00efe9081a9"
+  }
+ },
+ "note": "Paired per-market Brier improvements of the trained (profit) arm; positive favours training. 95% percentile bootstrap intervals, resampled by market.",
+ "phase1": {
+  "name": "Simulated markets (Phase 1)",
+  "comparator": "price_only_bayes_posterior",
+  "success": false,
+  "signal_requirement": null,
+  "reading": "no signal requirement demonstrated within 0.4-1",
+  "null_control": {
+   "strength": 0.0,
+   "passes": false,
+   "interpretation": "null control did not pass, as expected"
+  },
+  "mde_note": "not reported: the Phase 1 verdict has no realised MDE",
+  "strengths": [
+   {
+    "strength": 0.0,
+    "role": "null control",
+    "vs_price": {
+     "estimate": -0.033686796640957334,
+     "lower": -0.03916790256964236,
+     "upper": -0.02803486305968113,
+     "confidence_level": 0.95,
+     "n_resamples": 2000,
+     "resampling_unit": "market"
+    },
+    "vs_price_label": "signal edge over the best price-only forecast",
+    "vs_learning_off": {
+     "estimate": -0.012543467527609847,
+     "lower": -0.016845458856416685,
+     "upper": -0.008503396444001273,
+     "confidence_level": 0.95,
+     "n_resamples": 2000,
+     "resampling_unit": "market"
+    },
+    "vs_learning_off_label": "learning effect, any source",
+    "mde": null,
+    "passes": false,
+    "reading": "null control did not pass, as expected",
+    "n_test_markets": 3600,
+    "n_training_decisions": 1400
+   },
+   {
+    "strength": 0.4,
+    "role": "test",
+    "vs_price": {
+     "estimate": -0.02684281954085305,
+     "lower": -0.03218021431603709,
+     "upper": -0.021517266807356637,
+     "confidence_level": 0.95,
+     "n_resamples": 2000,
+     "resampling_unit": "market"
+    },
+    "vs_price_label": "signal edge over the best price-only forecast",
+    "vs_learning_off": {
+     "estimate": -0.01616643455447917,
+     "lower": -0.020564107671742105,
+     "upper": -0.011819703012465136,
+     "confidence_level": 0.95,
+     "n_resamples": 2000,
+     "resampling_unit": "market"
+    },
+    "vs_learning_off_label": "learning effect, any source",
+    "mde": null,
+    "passes": false,
+    "reading": "does not pass; ambiguous between (a) no learning of the signal and (b) learning-induced ignition degrading the readout, which this sweep cannot separate; the ignition report and the sensitivity analysis are shown alongside and cannot turn it into a pass; pre-stated: ideal-forecaster power about 0.70 at 3,600 test markets; a non-pass is undetermined, not absent",
+    "n_test_markets": 3600,
+    "n_training_decisions": 1400
+   },
+   {
+    "strength": 0.8,
+    "role": "test",
+    "vs_price": {
+     "estimate": -0.025674836354895234,
+     "lower": -0.03062514498041249,
+     "upper": -0.020481133516074886,
+     "confidence_level": 0.95,
+     "n_resamples": 2000,
+     "resampling_unit": "market"
+    },
+    "vs_price_label": "signal edge over the best price-only forecast",
+    "vs_learning_off": {
+     "estimate": -0.0205310959298465,
+     "lower": -0.024894151134791747,
+     "upper": -0.01590394313511241,
+     "confidence_level": 0.95,
+     "n_resamples": 2000,
+     "resampling_unit": "market"
+    },
+    "vs_learning_off_label": "learning effect, any source",
+    "mde": null,
+    "passes": false,
+    "reading": "does not pass; ambiguous between (a) no learning of the signal and (b) learning-induced ignition degrading the readout, which this sweep cannot separate; the ignition report and the sensitivity analysis are shown alongside and cannot turn it into a pass",
+    "n_test_markets": 3600,
+    "n_training_decisions": 1400
+   },
+   {
+    "strength": 1.0,
+    "role": "positive control",
+    "vs_price": {
+     "estimate": -0.02072587044905525,
+     "lower": -0.025380089765562868,
+     "upper": -0.01606198374239998,
+     "confidence_level": 0.95,
+     "n_resamples": 2000,
+     "resampling_unit": "market"
+    },
+    "vs_price_label": "signal edge over the best price-only forecast",
+    "vs_learning_off": {
+     "estimate": -0.016938160045407064,
+     "lower": -0.02150667885653756,
+     "upper": -0.012657129962356056,
+     "confidence_level": 0.95,
+     "n_resamples": 2000,
+     "resampling_unit": "market"
+    },
+    "vs_learning_off_label": "learning effect, any source",
+    "mde": null,
+    "passes": false,
+    "reading": "does not pass; ambiguous between (a) no learning of the signal and (b) learning-induced ignition degrading the readout, which this sweep cannot separate; the ignition report and the sensitivity analysis are shown alongside and cannot turn it into a pass",
+    "n_test_markets": 3600,
+    "n_training_decisions": 1400
+   }
+  ]
+ },
+ "phase2": {
+  "name": "Real markets (Phase 2)",
+  "success": false,
+  "gate_passes": false,
+  "reading": "does not pass: no detectable edge larger than the minimum detectable effect at the realised sigma_d (about 0.0062 over the comparator, 0.0061 over learning_off, in Brier units). This is not evidence of no edge.",
+  "comparator": {
+   "choice": "raw_price",
+   "n_train": 3220,
+   "cv_brier_raw": 0.14069568454968945,
+   "cv_brier_calibrated": 0.14087477025431455
+  },
+  "vs_comparator": {
+   "estimate": -0.04092276473261353,
+   "lower": -0.04521151347344589,
+   "upper": -0.03661066479511004,
+   "confidence_level": 0.95,
+   "n_resamples": 2000,
+   "resampling_unit": "market"
+  },
+  "vs_comparator_label": "edge over the market price, calibrated on training markets only",
+  "vs_comparator_mde": 0.006151384415156904,
+  "vs_learning_off": {
+   "estimate": -0.030870462953159084,
+   "lower": -0.03538641186065195,
+   "upper": -0.026679538255513894,
+   "confidence_level": 0.95,
+   "n_resamples": 2000,
+   "resampling_unit": "market"
+  },
+  "vs_learning_off_label": "learning effect, any source",
+  "vs_learning_off_mde": 0.006138646181039316,
+  "both_lower_bounds_above_zero": false,
+  "null_control": {
+   "passes": false,
+   "interpretation": "null control did not pass, as expected",
+   "vs_comparator": {
+    "estimate": -0.05603921233827538,
+    "lower": -0.060446045416067275,
+    "upper": -0.05141210303900974,
+    "confidence_level": 0.95,
+    "n_resamples": 2000,
+    "resampling_unit": "market"
+   }
+  },
+  "brier": {
+   "profit": 0.22568599494962743,
+   "learning_off": 0.19481553199646834,
+   "null_permuted": 0.24080244255528926,
+   "comparator": 0.18476323021701388
+  },
+  "n_test_markets": 7200,
+  "decisions": {
+   "profit": {
+    "trades": 7104,
+    "abstentions": 96
+   },
+   "learning_off": {
+    "trades": 7104,
+    "abstentions": 96
+   },
+   "null_permuted": {
+    "trades": 7103,
+    "abstentions": 97
+   }
+  }
+ }
+}

@@ -20,12 +20,29 @@
     .catch(() => { root.textContent = "The returns data could not be loaded."; });
 
   function init() {
-    document.getElementById("dash-demo").hidden = D.status !== "demo";
     const note = document.getElementById("dash-note"); note.textContent = D.note || ""; note.hidden = !D.note;
     document.querySelectorAll("[data-range]").forEach(b => b.addEventListener("click", () => { st.range = b.dataset.range; render(); }));
     document.querySelectorAll("[data-gran]").forEach(b => b.addEventListener("click", () => { st.gran = b.dataset.gran; render(); }));
     document.querySelectorAll("[data-arm]").forEach(c => c.addEventListener("change", () => { st.show[c.dataset.arm] = c.checked; render(); }));
+    captions();
     render();
+  }
+
+  // Caption sentences computed from pnl.json, over the whole test period.
+  function captions() {
+    const all = k => totals(D.arms[k].days), C = all("circuit"), O = all("off"), Pr = all("price");
+    const n = v => v.toLocaleString("en-US"), trades = t => t.wins + t.losses;
+    const n2 = v => v.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    const pTrades = trades(Pr);
+    document.getElementById("cap4").textContent =
+      "Over the whole test period the learning circuit ended at " + fmt(C.pnl) + " " + D.unit + " and the same circuit with learning switched off at " +
+      fmt(O.pnl) + " " + D.unit + ", gross, before fees and spread, not achievable as stated. The circuit won " + n(C.wins) + " trades and lost " + n(C.losses) +
+      " (" + (100 * C.wins / trades(C)).toFixed(1) + " percent won); with learning off it won " + n(O.wins) + " and lost " + n(O.losses) +
+      " (" + (100 * O.wins / trades(O)).toFixed(1) + " percent won). A winning share pays one unit, so each total is the number of wins minus the total paid for shares: " +
+      n(C.wins) + " − " + n2(C.stake) + " for the circuit and " + n(O.wins) + " − " + n2(O.stake) + " with learning off. The price-only trader " +
+      (pTrades ? "made " + n(pTrades) + " trades." : "made no trades, so its line stays at zero.");
+    const wk = group(D.arms.circuit.days, "W"), up = wk.filter(p => p.pnl > 0).length, down = wk.filter(p => p.pnl < 0).length;
+    document.getElementById("cap5").textContent = "Over the whole test period, " + up + " of " + wk.length + " weeks were gains and " + down + " were losses.";
   }
 
   function slice(days) {
@@ -66,7 +83,7 @@
     const hc = document.getElementById("dash-change");
     hc.textContent = fmt(T.pnl) + " (" + pct(T.stake ? T.pnl / T.stake : 0) + ") " + ({ "1W": "past week", "1M": "past month", "3M": "past 3 months", "6M": "past 6 months", ALL: "whole test period" })[st.range];
     hc.className = "dash-change " + cls(T.pnl);
-    document.getElementById("dash-asof").textContent = "Test markets decided " + dlabel(all[0].date) + " – " + dlabel(all[all.length - 1].date) + ", 2026 · " + (D.status === "demo" ? "placeholder data" : "final");
+    document.getElementById("dash-asof").textContent = "Test markets decided " + dlabel(all[0].date) + " – " + dlabel(all[all.length - 1].date) + ", 2026" + (D.status === "final" ? " · final" : "");
     // stats
     const P = group(main, st.gran), pos = P.filter(p => p.pnl > 0).length;
     const best = P.reduce((a, p) => (p.pnl > a.pnl ? p : a), P[0]), worst = P.reduce((a, p) => (p.pnl < a.pnl ? p : a), P[0]);
